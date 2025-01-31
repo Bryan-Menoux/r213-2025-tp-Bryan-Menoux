@@ -17,5 +17,10 @@
     "astro": "^5.1.6",
     "pocketbase": "^0.25.1",
     "tailwindcss": "^3.4.17"
-  }
+  },
+  "description": "> - Prénom:Bryan > - Nom: Menoux > - URL netlify: stately-baklava-654e99.netlify.app",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
 }
