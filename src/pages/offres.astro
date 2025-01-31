@@ -7,11 +7,11 @@ const offres = await allMaisons();
 ---
 
 <Base titre="Offres">
-  <h1 class="text-teal-800 text-5xl font-black">Offres</h1>
+  <h1 class="text-teal-800 text-5xl font-black uppercase">Offres</h1>
   <!-- ou "Offres" pour la page des offres -->
   <div class="flex flex-col gap-6" x-data="{ showFavorites: false }">
     <button
-      class="w-2/4 bg-teal-700 text-white shadow-md p-2 rounded-lg"
+      class="bg-teal-700 text-white shadow-md px-4 py-2 rounded-lg self-center"
       @click="showFavorites = !showFavorites"
     >
       <span x-show="!showFavorites">Afficher les favoris</span>
@@ -19,13 +19,13 @@ const offres = await allMaisons();
     </button>
 
     <div
-      class="flex flex-col gap-6"
+      class="grid grid-cols-3 gap-4"
       x-show="!showFavorites"
       x-transition.duration.200ms
     >
       {offres.map((offre) => <Card {...offre} />)}
     </div>
-    <div class="flex flex-col gap-6" x-show="showFavorites">
+    <div class="grid grid-cols-3 gap-4" x-show="showFavorites">
       {offres.map((offre) => offre.favori && <Card {...offre} />)}
     </div>
   </div>
