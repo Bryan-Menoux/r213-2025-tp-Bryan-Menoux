@@ -1,0 +1,32 @@
+---
+import Base from "../layouts/Base.astro";
+import Card from "../components/Card.astro";
+import { allMaisons } from "../backend.mjs";
+
+const offres = await allMaisons();
+---
+
+<Base titre="Offres">
+  <h1 class="text-teal-800 text-5xl font-black">Offres</h1>
+  <!-- ou "Offres" pour la page des offres -->
+  <div class="flex flex-col gap-6" x-data="{ showFavorites: false }">
+    <button
+      class="w-2/4 bg-teal-700 text-white shadow-md p-2 rounded-lg"
+      @click="showFavorites = !showFavorites"
+    >
+      <span x-show="!showFavorites">Afficher les favoris</span>
+      <span x-show="showFavorites">Afficher tout</span>
+    </button>
+
+    <div
+      class="flex flex-col gap-6"
+      x-show="!showFavorites"
+      x-transition.duration.200ms
+    >
+      {offres.map((offre) => <Card {...offre} />)}
+    </div>
+    <div class="flex flex-col gap-6" x-show="showFavorites">
+      {offres.map((offre) => offre.favori && <Card {...offre} />)}
+    </div>
+  </div>
+</Base>
