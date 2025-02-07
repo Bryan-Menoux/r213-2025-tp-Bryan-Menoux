@@ -1,0 +1,19 @@
+---
+import { priceBetween } from "../../../backend.mjs";
+import Base from "../../../layouts/Base.astro";
+import Card from "../../../components/Card.astro";
+
+const { prixMin, prixMax } = Astro.params;
+const offres = await priceBetween(prixMin, prixMax);
+---
+
+<Base titre={`Maisons avec un prix entre ${prixMin}€ et ${prixMax}€`}>
+  <h2
+    class="p-4 bg-teal-900 text-white text-2xl font-semibold uppercase rounded-lg"
+  >
+    Maisons avec un prix entre {prixMin}€ et {prixMax}€
+  </h2>
+  <div class="grid grid-cols-3 gap-4">
+    {offres.map((offre) => <Card {...offre} />)}
+  </div>
+</Base>

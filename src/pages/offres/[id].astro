@@ -10,9 +10,20 @@ if (!offre) {
 ---
 
 <Base titre={offre.nomMaison}>
-  <h2>{offre.nomMaison}</h2>
-  <ul>
-    <li>{offre.adresse}</li>
-    ...
-  </ul>
+  <article class="bg-white shadow-md rounded-3xl grid grid-cols-2 gap-4">
+    <ul class="flex flex-col gap-8 px-10 py-16 text-2xl">
+      <h2 class="font-semibold text-5xl uppercase">
+        {offre.nomMaison}
+      </h2>
+      <p>Adresse : {offre.adresse}</p>
+      <p>{offre.nbChambres} chambres, {offre.nbSdb} salles de bain</p>
+      <p>Surface : {offre.surface} m²</p>
+      <p>Prix : {offre.prix} €</p>
+    </ul>
+    <img
+      class="h-[50vh] object-center rounded-r-3xl"
+      src={offre.imgUrl}
+      alt={`Image de ${offre.nomMaison}`}
+    />
+  </article>
 </Base>

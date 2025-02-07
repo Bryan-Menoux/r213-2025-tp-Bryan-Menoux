@@ -82,9 +82,9 @@ export async function fourchette(min, max) {
 
 export async function getOffre(id) {
   try {
-    let data = await pb.collection("maison").getOne(id);
-    data.imageUrl = pb.files.getURL(data, data.images);
-    return data;
+    let maison = await pb.collection("maison").getOne(id);
+    maison.imgUrl = pb.files.getURL(maison, maison.images);
+    return maison;
   } catch (error) {
     console.log("Une erreur est survenue en lisant la maison", error);
     return null;
