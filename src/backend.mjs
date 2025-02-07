@@ -4,7 +4,7 @@ const pb = new PocketBase("http://127.0.0.1:8090");
 export async function allMaisons() {
   let records = await pb.collection("maison").getFullList();
   records = records.map((maison) => {
-    maison.imgUrl = pb.files.getUrl(maison, maison.images);
+    maison.imgUrl = pb.files.getURL(maison, maison.images);
     return maison;
   });
   return records;
@@ -28,10 +28,14 @@ export async function allMaisonsSorted() {
 }
 
 export async function bySurface(surface) {
-  const record = await pb
+  let records = await pb
     .collection("maison")
     .getFullList({ filter: `surface >= ${surface}` });
-  return record;
+  records = records.map((maison) => {
+    maison.imgUrl = pb.files.getURL(maison, maison.images);
+    return maison;
+  });
+  return records;
 }
 
 export async function surfaceORprice(surface, price) {
@@ -57,7 +61,7 @@ export async function fourchette(min, max) {
 export async function getOffre(id) {
   try {
     let data = await pb.collection("maison").getOne(id);
-    data.imageUrl = pb.files.getURL(data, data.image);
+    data.imageUrl = pb.files.getURL(data, data.images);
     return data;
   } catch (error) {
     console.log("Une erreur est survenue en lisant la maison", error);
