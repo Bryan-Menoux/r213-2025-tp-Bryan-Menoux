@@ -38,6 +38,28 @@ export async function bySurface(surface) {
   return records;
 }
 
+export async function byPrice(prix) {
+  let records = await pb
+    .collection("maison")
+    .getFullList({ filter: `prix <= ${prix}` });
+  records = records.map((maison) => {
+    maison.imgUrl = pb.files.getURL(maison, maison.images);
+    return maison;
+  });
+  return records;
+}
+
+export async function priceBetween(prixMin, prixMax) {
+  let records = await pb.collection("maison").getFullList({
+    filter: `prix >= ${prixMin} && prix <= ${prixMax}`,
+  });
+  records = records.map((maison) => {
+    maison.imgUrl = pb.files.getURL(maison, maison.images);
+    return maison;
+  });
+  return records;
+}
+
 export async function surfaceORprice(surface, price) {
   const record = await pb.collection("maison").getFullList({
     filter: `surface >= ${surface} || prix <= ${price}`,

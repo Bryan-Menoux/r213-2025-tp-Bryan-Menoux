@@ -1,17 +1,17 @@
 ---
-import { bySurface } from "../../../backend.mjs";
+import { byPrice } from "../../../backend.mjs";
 import Base from "../../../layouts/Base.astro";
 import Card from "../../../components/Card.astro";
 
-const { surface } = Astro.params;
-const offres = await bySurface(surface);
+const { prix } = Astro.params;
+const offres = await byPrice(prix);
 ---
 
-<Base titre={`SURFACE < ${surface} m²`}>
+<Base titre={`PRIX < ${prix}€`}>
   <h2
     class="p-4 bg-teal-900 text-white text-2xl font-semibold uppercase rounded-lg"
   >
-    Maisons avec une surface supérieure à {surface} m²
+    Maisons avec une prix inférieur à {prix} €
   </h2>
   <div class="grid grid-cols-3 gap-4">
     {offres.map((offre) => <Card {...offre} />)}
