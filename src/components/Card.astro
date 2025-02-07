@@ -11,4 +11,5 @@ const offre = Astro.props;
   <p>Surface : {offre.surface} m²</p>
   <p>Prix : {offre.prix} €</p>
   <img class="h-80 object-cover object-center" src={offre.imgUrl} />
+  <a href={`/offres/${offre.id}`}>Voir plus</a>
 </li>

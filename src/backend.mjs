@@ -10,8 +10,8 @@ export async function allMaisons() {
   return records;
 }
 
-export async function oneID() {
-  const record = await pb.collection("maison").getOne("781lm8e7ut5a69a");
+export async function oneID(id) {
+  const record = await pb.collection("maison").getOne(id);
   return record;
 }
 
@@ -52,4 +52,15 @@ export async function fourchette(min, max) {
     .collection("maison")
     .getFullList({ sort: "prix", filter: `prix >= ${min} && prix <= ${max}` });
   return record;
+}
+
+export async function getOffre(id) {
+  try {
+    let data = await pb.collection("maison").getOne(id);
+    data.imageUrl = pb.files.getURL(data, data.image);
+    return data;
+  } catch (error) {
+    console.log("Une erreur est survenue en lisant la maison", error);
+    return null;
+  }
 }
