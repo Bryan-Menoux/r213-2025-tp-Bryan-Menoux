@@ -155,4 +155,21 @@ export async function userAuth(login, mdp) {
   return authData;
 }
 
-// test
+export async function addOffre(house) {
+  await superUserauth();
+  try {
+    await pb.collection("maison").create(house);
+    pb.authStore.clear();
+    return {
+      success: true,
+      message: "Offre ajoutée avec succès",
+    };
+  } catch (error) {
+    console.log("Une erreur est survenue en ajoutant la maison", error);
+    pb.authStore.clear();
+    return {
+      success: false,
+      message: "Une erreur est survenue en ajoutant la maison",
+    };
+  }
+}
