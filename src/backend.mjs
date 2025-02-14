@@ -110,7 +110,6 @@ export async function getOffre(id) {
   }
 }
 
-// Test
 export async function addNewMaison(newMaison) {
   await superUserauth();
   await pb.collection("maison").create(newMaison);
@@ -155,3 +154,5 @@ export async function userAuth(login, mdp) {
   pb.authStore.clear();
   return authData;
 }
+
+// test
