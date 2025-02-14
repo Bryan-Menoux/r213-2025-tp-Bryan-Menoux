@@ -11,11 +11,19 @@ if (Astro.request.method === "POST") {
 ---
 
 <Base>
-  <article class="space-x-10 bg-zinc-300">
-    <h1 class="text-lg">Ajouter une offre</h1>
+  <article
+    class="space-x-10 bg-zinc-200 flex flex-col items-center p-4 rounded-lg gap-4 shadow-md"
+  >
+    <h1 class="text-3xl font-black uppercase">Ajouter une offre</h1>
     <h2>{message}</h2>
-    <form action="/offres/add" method="POST" enctype="multipart/form-data">
+    <form
+      class="grid grid-cols-2 gap-4"
+      action="/offres/add"
+      method="POST"
+      enctype="multipart/form-data"
+    >
       <input
+        class="col-span-2"
         type="text"
         name="nomMaison"
         placeholder="Nom de la maison"

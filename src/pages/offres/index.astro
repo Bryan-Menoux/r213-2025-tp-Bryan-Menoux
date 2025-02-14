@@ -27,27 +27,41 @@ if (Astro.request.method === "POST") {
 ---
 
 <Base titre="Offres">
-  <h1 class="text-teal-600 text-5xl font-black uppercase">Offres</h1>
+  <h1 class="text-zinc-900 text-9xl font-black uppercase">Offres</h1>
   <!-- ou "Offres" pour la page des offres -->
   <div class="flex flex-col gap-6" x-data="{ showFavorites: false }">
-    <div>
+    <div class="flex items-center gap-4">
       <button
-        class="bg-teal-700 text-white shadow-md px-4 py-2 rounded-lg self-center"
+        class="bg-yellow-300 text-zinc-900 select-none font-bold shadow-md px-4 py-2 rounded-lg self-center"
         @click="showFavorites = !showFavorites"
       >
         <span x-show="!showFavorites">Afficher les favoris</span>
         <span x-show="showFavorites">Afficher tout</span>
       </button>
-      <form action="/offres" method="POST">
+      <form
+        class="flex gap-4 px-6 py-4 rounded-lg bg-zinc-200 shadow-md"
+        action="/offres"
+        method="POST"
+      >
         <input
+          class="px-2 py-1 rounded-lg bg-gray-100 border border-zinc-900"
           type="number"
           name="minPrix"
           placeholder="Prix minimum"
-          value="0"
         />
-        <input type="number" name="maxPrix" placeholder="Prix maximum" />
-        <input type="submit" value="Filtrer par prix" />
+        <input
+          class="px-2 py-1 rounded-lg bg-gray-100 border border-zinc-900"
+          type="number"
+          name="maxPrix"
+          placeholder="Prix maximum"
+        />
+        <input
+          class="px-2 py-1 rounded-lg bg-zinc-950 text-white text-xl font-bold border"
+          type="submit"
+          value="Filtrer par prix"
+        />
       </form>
+      <h2>{message}</h2>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <a
