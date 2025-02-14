@@ -173,3 +173,24 @@ export async function addOffre(house) {
     };
   }
 }
+
+export async function filterByPrix(prixMin, prixMax) {
+  await superUserauth();
+  try {
+    let data = await pb.collection("maison").getFullList({
+      sort: "-date_de_creation",
+      filter: `prix >= ${prixMin} && prix <= ${prixMax}`,
+    });
+    data = data.map((maison) => {
+      maison.imgUrl = pb.files.getURL(maison, maison.images);
+      return maison;
+    });
+    return data;
+  } catch (error) {
+    console.log(
+      "Une erreur est survenue en filtrant la liste des maisons",
+      error
+    );
+    return [];
+  }
+}

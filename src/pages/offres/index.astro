@@ -1,22 +1,54 @@
 ---
 import Base from "../../layouts/Base.astro";
 import Card from "../../components/Card.astro";
-import { allMaisons } from "../../backend.mjs";
+import { allMaisons, filterByPrix } from "../../backend.mjs";
 
-const offres = await allMaisons();
+let message = "";
+let offres = [];
+if (Astro.request.method === "POST") {
+  const data = await Astro.request.formData();
+  const minPrix = parseInt(data.get("minPrix") as string);
+  const maxPrix = parseInt(data.get("maxPrix") as string);
+
+  if (minPrix > 0 && maxPrix > 0 && maxPrix > minPrix) {
+    offres = await filterByPrix(minPrix, maxPrix);
+    if (offres.length === 0) {
+      message = `Pas d'offres entre ${minPrix}€ et ${maxPrix}€`;
+    } else {
+      message = `Liste des offres entre ${minPrix}€ et ${maxPrix}€`;
+    }
+  } else {
+    message = "Veuillez entrer des valeurs valides pour le prix.";
+    offres = await allMaisons();
+  }
+} else {
+  offres = await allMaisons();
+}
 ---
 
 <Base titre="Offres">
   <h1 class="text-teal-600 text-5xl font-black uppercase">Offres</h1>
   <!-- ou "Offres" pour la page des offres -->
   <div class="flex flex-col gap-6" x-data="{ showFavorites: false }">
-    <button
-      class="bg-teal-700 text-white shadow-md px-4 py-2 rounded-lg self-center"
-      @click="showFavorites = !showFavorites"
-    >
-      <span x-show="!showFavorites">Afficher les favoris</span>
-      <span x-show="showFavorites">Afficher tout</span>
-    </button>
+    <div>
+      <button
+        class="bg-teal-700 text-white shadow-md px-4 py-2 rounded-lg self-center"
+        @click="showFavorites = !showFavorites"
+      >
+        <span x-show="!showFavorites">Afficher les favoris</span>
+        <span x-show="showFavorites">Afficher tout</span>
+      </button>
+      <form action="/offres" method="POST">
+        <input
+          type="number"
+          name="minPrix"
+          placeholder="Prix minimum"
+          value="0"
+        />
+        <input type="number" name="maxPrix" placeholder="Prix maximum" />
+        <input type="submit" value="Filtrer par prix" />
+      </form>
+    </div>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <a
         class="p-2 bg-teal-600 rounded-xl text-center text-white whitespace-nowrap"
@@ -38,10 +70,13 @@ const offres = await allMaisons();
       x-show="!showFavorites"
       x-transition.duration.200ms
     >
-      {offres.map((offre) => <Card {...offre} />)}
+      {offres.map((offre: any) => <Card {...offre} />)}
     </div>
     <div class="grid grid-cols-3 gap-4" x-show="showFavorites">
-      {offres.map((offre) => offre.favori && <Card {...offre} />)}
+      {offres.map((offre: any) => offre.favori && <Card {...offre} />)}
     </div>
   </div>
+  <a class="px-4 py-2 bg-teal-700 text-white rounded-lg" href="/offres/add"
+    >Ajouter une offre</a
+  >
 </Base>

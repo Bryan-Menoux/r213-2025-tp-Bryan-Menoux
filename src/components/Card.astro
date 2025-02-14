@@ -9,7 +9,7 @@ const offre = Astro.props;
   <p>Adresse : {offre.adresse}</p>
   <p>{offre.nbChambres} chambres, {offre.nbSdb} salles de bain</p>
   <p>Surface : {offre.surface} m²</p>
-  <p>Prix : {offre.prix} €</p>
+  <p>Prix : {new Intl.NumberFormat("fr-FR").format(offre.prix)} €</p>
   <img
     class="h-80 object-cover object-center"
     src={offre.imgUrl}
