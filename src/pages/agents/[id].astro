@@ -1,0 +1,25 @@
+---
+import Base from "../../layouts/Base.astro"
+import { donneesAgent } from "../../backend.mjs"
+import { allMaisonsByAgentId } from "../../backend.mjs"
+import Card from "../../components/Card.astro"
+
+const {id} = Astro.params
+
+const agent = await donneesAgent(id)
+const maisons = await allMaisonsByAgentId(id)
+
+console.log(maisons)
+---
+
+<Base>
+        <h1>{agent.id}</h1>
+        <div class="grid lg:grid-cols-3 gap-6">
+            {
+            maisons.map((maison) => (
+                <Card {...maison} />
+            ))
+            }
+        </div>
+        
+</Base>

@@ -18,6 +18,23 @@ export async function allMaisons() {
   return records;
 }
 
+export async function allMaisonsByAgentId(agentId) {
+  await superUserauth();
+  let records = await pb.collection("maison").getFullList({
+    filter: `agent.id = '${agentId}'`,
+  });
+  records = records.map((maison) => {
+    maison.imgUrl = pb.files.getURL(maison, maison.images);
+    return maison;
+  });
+  return records;
+}
+
+export async function getAllAgents() {
+  await superUserauth();
+  return pb.collection("agent").getFullList();
+}
+
 export async function oneID(id) {
   await superUserauth();
   const record = await pb.collection("maison").getOne(id);
