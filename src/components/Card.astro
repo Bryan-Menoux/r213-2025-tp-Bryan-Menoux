@@ -2,7 +2,13 @@
 const offre = Astro.props;
 ---
 
-<li class="bg-white shadow-md p-4 rounded-lg flex flex-col gap-2 w-full">
+<script>
+    //@ts-nocheck
+    import { setFavori } from "../backend.mjs";
+    window.setFavori = setFavori;
+</script>
+<div 
+ x-data={`{favori: ${offre.favori}, clickFavori() {this.favori = !this.favori; setFavori(${JSON.stringify(offre)});}}`}><li class="bg-white shadow-md p-4 rounded-lg flex flex-col gap-2 w-full">
   <h2 class="font-semibold text-xl uppercase">
     {offre.nomMaison}
   </h2>
@@ -16,4 +22,10 @@ const offre = Astro.props;
     alt={`Image de ${offre.nomMaison}`}
   />
   <a href={`/offres/${offre.id}`}>Voir plus</a>
-</li>
+  <button class="p-2 rounded-lg" @click="clickFavori" x-bind:class="{ 'bg-blue-500': favori, 'bg-gray-300': !favori }">
+    FAVORI
+</button>
+<p x-text="favori"></p>
+</li></div>
+
+

@@ -211,3 +211,9 @@ export async function filterByPrix(prixMin, prixMax) {
     return [];
   }
 }
+
+export async function setFavori(house) {
+  superUserauth();
+  await pb.collection("maison").update(house.id, { favori: !house.favori });
+  pb.authStore.clear();
+}
