@@ -1,7 +1,42 @@
 ---
 import Base from "../layouts/Base.astro";
+
+import {getAllFavori} from "../backend.mjs";
+
+const favoris = await getAllFavori();
+
+console.log(favoris);
 ---
 
 <Base titre="Accueil">
-  <h1 class="text-teal-800 text-5xl font-black">Accueil</h1>
+  <div class="w-full lg:w-1/3 flex overflow-x-scroll scroll-smooth snap-x snap-mandatory">
+    {
+      favoris.map((favori) => (
+        <img 
+          src={favori.imgUrl} 
+          alt="image" 
+          class="object-cover snap-center min-w-full" 
+        />
+      ))
+    }
+  </div>
+
+   <button 
+      id="nextBtn" 
+      class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-200 p-2 rounded">Next</button>
+  </div>
+  
+  <script is:inline>
+    const carousel = document.getElementById('carousel');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    prevBtn.addEventListener('click', () => {
+      carousel.scrollBy({ left: -carousel.clientWidth, behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      carousel.scrollBy({ left: carousel.clientWidth, behavior: 'smooth' });
+    });
+  </script>
 </Base>

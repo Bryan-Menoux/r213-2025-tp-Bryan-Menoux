@@ -217,3 +217,16 @@ export async function setFavori(house) {
   await pb.collection("maison").update(house.id, { favori: !house.favori });
   pb.authStore.clear();
 }
+
+export async function getAllFavori() {
+  await superUserauth();
+  let records = await pb.collection("maison").getFullList({
+    sort: "-date_de_creation",
+    filter: "favori = true",
+  });
+  records = records.map((maison) => {
+    maison.imgUrl = pb.files.getURL(maison, maison.images);
+    return maison;
+  });
+  return records;
+}
